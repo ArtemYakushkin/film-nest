@@ -1,24 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
+import Sidebar from "./components/Sidebar";
+import Header from "./components/Header";
+import HomePage from "./pages/HomePage";
+import MovieDetailsPage from "./pages/MovieDetailsPage";
+import ActorPage from "./pages/ActorPage";
+import SearchPage from "./pages/SearchPage";
+import GenrePage from "./pages/GenrePage";
+import TrendingPage from "./pages/TrendingPage";
+import TopPage from "./pages/TopPage";
+import UpcomingPage from "./pages/UpcomingPage";
+import PopularActorsPage from "./pages/PopularActorsPage";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+        <div className="container" style={{position: "relative"}}>
+          <Sidebar />
+        </div>
+        <Header />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/movie/:id" element={<MovieDetailsPage />} />
+          <Route path="/actor/:id" element={<ActorPage />} />
+          <Route path="/search" element={<SearchPage />} />
+          <Route path="/genre/:genreId" element={<GenrePage />} />
+          <Route path="/trending" element={<TrendingPage />} />
+          <Route path="/top-rated" element={<TopPage />} />
+          <Route path="/upcoming" element={<UpcomingPage />} />
+          <Route path="/popular-actors" element={<PopularActorsPage />} />
+        </Routes>
+      </Router>
   );
 }
 
