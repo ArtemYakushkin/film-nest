@@ -11,6 +11,9 @@ import TrendingPage from "./pages/TrendingPage";
 import TopPage from "./pages/TopPage";
 import UpcomingPage from "./pages/UpcomingPage";
 import PopularActorsPage from "./pages/PopularActorsPage";
+import SavedPage from "./pages/SavedPage";
+import NewsPage from "./pages/NewsPage";
+import ReleaseCalendarPage from "./pages/ReleaseCalendarPage";
 
 function App() {
   return (
@@ -29,6 +32,9 @@ function App() {
           <Route path="/top-rated" element={<TopPage />} />
           <Route path="/upcoming" element={<UpcomingPage />} />
           <Route path="/popular-actors" element={<PopularActorsPage />} />
+          <Route path="/saved" element={<SavedPage />} />
+          <Route path="/news" element={<NewsPage />} />
+          <Route path="/calendar" element={<ReleaseCalendarPage />} />
         </Routes>
       </Router>
   );

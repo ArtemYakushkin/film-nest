@@ -23,6 +23,7 @@ const TrendingPage = () => {
                 id={movie.id}
                 posterPath={movie.poster_path}
                 rating={movie.vote_average}
+                title={movie.title}
               />
             ))}
           </div>

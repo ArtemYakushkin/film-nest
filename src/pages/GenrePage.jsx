@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useParams, useSearchParams, useNavigate, useLocation } from "react-router-dom";
 
 import { fetchMoviesByGenre } from "../api/tmdb";
 import Spinner from "../components/Spinner";
 import MovieCard from "../components/MovieCard";
 
-import { IoIosArrowRoundDown, IoIosArrowRoundUp } from "react-icons/io";
+import { IoIosArrowRoundDown, IoIosArrowRoundUp, IoIosArrowRoundBack } from "react-icons/io";
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
 
 const GenrePage = () => {
@@ -26,6 +26,17 @@ const GenrePage = () => {
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from;
+
+  const handleGoBack = () => {
+    if (from) {
+      navigate(from);
+    } else {
+      navigate("/"); // fallback
+    }
+  };
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -133,6 +144,10 @@ const GenrePage = () => {
       <div className="container">
         <div className="wrapp">
           <div className="genre-frame">
+            <button className="genre-btn-back" onClick={handleGoBack}>
+              <IoIosArrowRoundBack />
+              Back
+            </button>
             <h2 className="subtitle">{genreName} Movies</h2>
             <div className="genre-filters" ref={dropdownRef}>
               <div className="genre-dropdown">

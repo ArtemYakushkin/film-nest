@@ -139,3 +139,15 @@ export const fetchUpcomingMovies = async () => {
   });
   return res.data.results;
 };
+
+export const fetchUpcomingMoviesCalendar = async () => {
+  const res = await axios.get(`${BASE_URL}/movie/upcoming`, {
+    params: {
+      api_key: API_KEY,
+      language: 'en-US',
+      region: 'US',
+      page: 1,
+    },
+  });
+  return res.data.results; // array of movies
+};

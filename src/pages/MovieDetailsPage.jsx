@@ -1,7 +1,13 @@
 import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link, useLocation } from "react-router-dom";
+import { doc, setDoc } from "firebase/firestore";
+
+import { db } from "../firebase";
 
 import { useMovieDetailsStore } from "../store/movieStore";
+import { useUserStore } from "../store/userStore";
+
+import { IoBookmark } from "react-icons/io5";
 
 import Spinner from "../components/Spinner";
 import MovieCard from "../components/MovieCard";
@@ -14,6 +20,8 @@ import NoImage from "../assets/No image.jpg";
 const MovieDetailsPage = () => {
   const { id } = useParams();
   const { movie, recommended, fetchMovieDetails } = useMovieDetailsStore();
+  const { user } = useUserStore();
+  const location = useLocation();
 
   const getRatingColor = (rating) => {
     if (rating <= 4) return "var(--red-color)";
@@ -26,6 +34,34 @@ const MovieDetailsPage = () => {
   }, [id, fetchMovieDetails]);
 
   if (!movie) return <Spinner />;
+
+  const handleSave = async () => {
+    if (!user) return alert("First, log in to your account.");
+
+    try {
+      if (!movie.title || !movie.poster_path || !movie.id) {
+        console.warn("Неполные данные фильма, сохранение отменено", {
+          title: movie.title,
+          poster_path: movie.poster_path,
+          id: movie.id,
+        });
+        return;
+      }
+
+      const movieRef = doc(db, "users", user.uid, "savedMovies", String(movie.id));
+      await setDoc(movieRef, {
+        id: movie.id,
+        title: movie.title || "Untitled",
+        posterPath: movie.poster_path,
+        rating: movie.vote_average || null,
+      });
+
+      alert("The movie is saved!");
+    } catch (error) {
+      console.error("Ошибка при сохранении фильма:", error);
+      alert("Error saving movie.");
+    }
+  };
 
   return (
     <div className="details">
@@ -55,14 +91,21 @@ const MovieDetailsPage = () => {
             <div className="details-information">
               <div className="details-title-rating">
                 <h1 className="details-title">{movie.title}</h1>
-                <div
-                  className="details-rating"
-                  style={{
-                    color: getRatingColor(movie.vote_average),
-                    border: `2px solid ${getRatingColor(movie.vote_average)}`,
-                  }}
-                >
-                  {movie.vote_average ? movie.vote_average.toFixed(1) : "N/A"}
+                <div className="details-saved">
+                  {user && (
+                    <button className="details-btn-saved" onClick={handleSave}>
+                      <IoBookmark size={38} color="var(--first-color)" />
+                    </button>
+                  )}
+                  <div
+                    className="details-rating"
+                    style={{
+                      color: getRatingColor(movie.vote_average),
+                      border: `2px solid ${getRatingColor(movie.vote_average)}`,
+                    }}
+                  >
+                    {movie.vote_average ? movie.vote_average.toFixed(1) : "N/A"}
+                  </div>
                 </div>
               </div>
 
@@ -93,9 +136,14 @@ const MovieDetailsPage = () => {
 
               <div className="details-genres">
                 {movie.genres.map((g) => (
-                  <div className="details-genre" key={g.name}>
+                  <Link
+                    to={`/genre/${g.id}`}
+                    state={{ from: location.pathname }}
+                    className="details-genre"
+                    key={g.name}
+                  >
                     #{g.name}
-                  </div>
+                  </Link>
                 ))}
               </div>
 

@@ -1,8 +1,17 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 
+import { useUserStore } from "../store/userStore";
+
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
-import { IoSearchOutline, IoList, IoPeople } from "react-icons/io5";
+import {
+  IoSearchOutline,
+  IoList,
+  IoPeople,
+  IoBookmark,
+  IoNewspaperOutline,
+  IoCalendarNumberOutline,
+} from "react-icons/io5";
 
 import SearchBar from "./SearchBar";
 import GenreList from "./GenreList";
@@ -12,6 +21,7 @@ const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
   const toggleSidebar = () => setIsOpen(!isOpen);
+  const { user } = useUserStore();
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -55,7 +65,6 @@ const Sidebar = () => {
           style={{ marginBottom: "24px", cursor: "pointer" }}
         />
       )}
-
       {isOpen ? (
         <TrendingLinks isOpen={isOpen} />
       ) : (
@@ -67,7 +76,7 @@ const Sidebar = () => {
       )}
 
       {isOpen ? (
-        <Link className="sidebar-popular" to={"/popular-actors"}>
+        <Link className="sidebar-link" to={"/popular-actors"}>
           <IoPeople size={28} />
           <p>Popular Actors</p>
         </Link>
@@ -78,6 +87,45 @@ const Sidebar = () => {
           style={{ marginBottom: "24px", cursor: "pointer" }}
         />
       )}
+
+      {isOpen ? (
+        <Link className="sidebar-link" to={"/news"}>
+          <IoNewspaperOutline size={28} />
+          <p>Movies News</p>
+        </Link>
+      ) : (
+        <IoNewspaperOutline
+          size={28}
+          color="var(--first-color)"
+          style={{ marginBottom: "24px", cursor: "pointer" }}
+        />
+      )}
+
+      {user &&
+        (isOpen ? (
+          <Link className="sidebar-link" to="/saved">
+            <IoBookmark size={28} /> <p>My Saved Movies</p>
+          </Link>
+        ) : (
+          <IoBookmark
+            size={28}
+            color="var(--first-color)"
+            style={{ marginBottom: "24px", cursor: "pointer" }}
+          />
+        ))}
+
+      {user &&
+        (isOpen ? (
+          <Link className="sidebar-link" to="/calendar">
+            <IoCalendarNumberOutline size={28} /> <p>Release</p>
+          </Link>
+        ) : (
+          <IoCalendarNumberOutline
+            size={28}
+            color="var(--first-color)"
+            style={{ marginBottom: "24px", cursor: "pointer" }}
+          />
+        ))}
     </aside>
   );
 };
