@@ -50,7 +50,7 @@ const AuthButton = () => {
             <img src={user.photo} alt={user.name} style={{ referrerPolicy: "no-referrer" }} />
             <p>{user.name}</p>
           </div>
-          <button onClick={handleLogout}>
+          <button className="auth-button-logout" onClick={handleLogout}>
             <IoLogOutOutline size={28} color="var(--first-color)" />
           </button>
         </>

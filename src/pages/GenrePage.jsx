@@ -143,12 +143,14 @@ const GenrePage = () => {
     <div className="section">
       <div className="container">
         <div className="wrapp">
+          <button className="genre-btn-back" onClick={handleGoBack}>
+            <IoIosArrowRoundBack />
+            Back
+          </button>
+
           <div className="genre-frame">
-            <button className="genre-btn-back" onClick={handleGoBack}>
-              <IoIosArrowRoundBack />
-              Back
-            </button>
             <h2 className="subtitle">{genreName} Movies</h2>
+
             <div className="genre-filters" ref={dropdownRef}>
               <div className="genre-dropdown">
                 <button

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { IoSearchOutline } from "react-icons/io5";
 
-const SearchBar = ({ isOpen }) => {
+const SearchBar = ({ closeMenu }) => {
   const [query, setQuery] = useState("");
   const navigate = useNavigate();
 
@@ -13,6 +13,7 @@ const SearchBar = ({ isOpen }) => {
       navigate(`/search?query=${encodeURIComponent(query)}`);
       setQuery("");
     }
+    if (closeMenu) closeMenu();
   };
 
   return (
@@ -31,7 +32,6 @@ const SearchBar = ({ isOpen }) => {
         placeholder="Search movies..."
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        style={{ display: isOpen ? "block" : "none" }}
       />
     </form>
   );

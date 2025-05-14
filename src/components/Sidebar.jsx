@@ -50,6 +50,7 @@ const Sidebar = () => {
         <SearchBar isOpen={isOpen} />
       ) : (
         <IoSearchOutline
+          className="sidebar-icon"
           size={28}
           color="var(--first-color)"
           style={{ marginBottom: "24px", cursor: "pointer" }}
@@ -60,11 +61,13 @@ const Sidebar = () => {
         <GenreList isOpen={isOpen} />
       ) : (
         <IoList
+          className="sidebar-icon"
           size={28}
           color="var(--first-color)"
           style={{ marginBottom: "24px", cursor: "pointer" }}
         />
       )}
+
       {isOpen ? (
         <TrendingLinks isOpen={isOpen} />
       ) : (
@@ -82,6 +85,7 @@ const Sidebar = () => {
         </Link>
       ) : (
         <IoPeople
+          className="sidebar-icon"
           size={28}
           color="var(--first-color)"
           style={{ marginBottom: "24px", cursor: "pointer" }}
@@ -95,6 +99,7 @@ const Sidebar = () => {
         </Link>
       ) : (
         <IoNewspaperOutline
+          className="sidebar-icon"
           size={28}
           color="var(--first-color)"
           style={{ marginBottom: "24px", cursor: "pointer" }}
@@ -108,6 +113,7 @@ const Sidebar = () => {
           </Link>
         ) : (
           <IoBookmark
+            className="sidebar-icon"
             size={28}
             color="var(--first-color)"
             style={{ marginBottom: "24px", cursor: "pointer" }}
@@ -121,6 +127,7 @@ const Sidebar = () => {
           </Link>
         ) : (
           <IoCalendarNumberOutline
+            className="sidebar-icon"
             size={28}
             color="var(--first-color)"
             style={{ marginBottom: "24px", cursor: "pointer" }}

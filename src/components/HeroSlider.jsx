@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -11,6 +11,31 @@ const HeroSlider = () => {
   const { currentIndex, next, prev } = useCarouselStore();
   const navigate = useNavigate();
 
+  const [touchStartX, setTouchStartX] = useState(null);
+  const [touchEndX, setTouchEndX] = useState(null);
+
+  const handleTouchStart = (e) => {
+    setTouchStartX(e.touches[0].clientX);
+  };
+
+  const handleTouchMove = (e) => {
+    setTouchEndX(e.touches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStartX || !touchEndX) return;
+    const distance = touchStartX - touchEndX;
+
+    if (distance > 100) {
+      next(); // свайп влево
+    } else if (distance < -100) {
+      prev(); // свайп вправо
+    }
+
+    setTouchStartX(null);
+    setTouchEndX(null);
+  };
+
   useEffect(() => {
     fetchMovies();
   }, [fetchMovies]);
@@ -21,6 +46,9 @@ const HeroSlider = () => {
     <>
       {currentMovie && (
         <div
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
           className="hero-slider"
           style={{
             backgroundImage: `linear-gradient(180deg,rgba(0, 0, 0, 0) 0%, rgba(39, 39, 39, 0.886) 100%, rgba(0, 0, 0, 0.755) 100%), url(https://image.tmdb.org/t/p/original${currentMovie.backdrop_path})`,

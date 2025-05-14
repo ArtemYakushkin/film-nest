@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useTrendingStore } from "../store/trendingStore";
 
-const TrendingLinks = () => {
+const TrendingLinks = ({ closeMenu }) => {
   const { loadTrending, loadTopRated, loadUpcoming } = useTrendingStore();
 
   const handleClick = (type) => {
@@ -28,7 +28,10 @@ const TrendingLinks = () => {
           <Link
             className="trending-links-item"
             to="/trending"
-            onClick={() => handleClick("trending")}
+            onClick={() => {
+              handleClick("trending");
+              if (closeMenu) closeMenu();
+            }}
           >
             <p className="trending-links-letter">T</p>
             <p className="trending-links-word">Trending Movies</p>
@@ -38,7 +41,10 @@ const TrendingLinks = () => {
           <Link
             className="trending-links-item"
             to="/top-rated"
-            onClick={() => handleClick("top-rated")}
+            onClick={() => {
+              handleClick("top-rated");
+              if (closeMenu) closeMenu();
+            }}
           >
             <p className="trending-links-letter">R</p>
             <p className="trending-links-word">Top Rated</p>
@@ -48,7 +54,10 @@ const TrendingLinks = () => {
           <Link
             className="trending-links-item"
             to="/upcoming"
-            onClick={() => handleClick("upcoming")}
+            onClick={() => {
+              handleClick("upcoming");
+              if (closeMenu) closeMenu();
+            }}
           >
             <p className="trending-links-letter">U</p>
             <p className="trending-links-word">Upcoming</p>

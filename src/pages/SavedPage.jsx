@@ -17,7 +17,6 @@ const SavedPage = () => {
     return "var(--accent-color)";
   };
 
-  // Используем useCallback, чтобы избежать излишних изменений функции
   const fetchSavedMovies = useCallback(async () => {
     if (!user) return;
 
@@ -34,7 +33,7 @@ const SavedPage = () => {
     } finally {
       setLoading(false);
     }
-  }, [user]); // зависимость от user
+  }, [user]);
 
   const handleDeleteMovie = async (movieId) => {
     if (!user || !movieId) return;
@@ -50,7 +49,7 @@ const SavedPage = () => {
 
   useEffect(() => {
     fetchSavedMovies();
-  }, [fetchSavedMovies]); // добавили fetchSavedMovies как зависимость
+  }, [fetchSavedMovies]);
 
   if (!user) {
     return <p>You are not logged in.</p>;

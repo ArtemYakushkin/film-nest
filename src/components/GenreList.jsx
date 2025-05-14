@@ -6,7 +6,7 @@ import { useGenreStore } from "../store/genreStore";
 import { IoList } from "react-icons/io5";
 import { IoMdArrowDropdown } from "react-icons/io";
 
-const GenreList = ({ isOpen }) => {
+const GenreList = ({ closeMenu }) => {
   const { genres, loadGenres } = useGenreStore();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const containerRef = useRef(null); // оборачиваем и кнопку, и список
@@ -25,6 +25,11 @@ const GenreList = ({ isOpen }) => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  const handleClick = () => {
+    setDropdownOpen(false);
+    if (closeMenu) closeMenu();
+  };
 
   return (
     <div className="genrelist" ref={containerRef}>
@@ -47,7 +52,7 @@ const GenreList = ({ isOpen }) => {
         <ul className="genrelist-dropdown">
           {genres.map((genre) => (
             <li key={genre.id}>
-              <Link to={`/genre/${genre.id}`} onClick={() => setDropdownOpen(false)}>
+              <Link to={`/genre/${genre.id}`} onClick={handleClick}>
                 {genre.name}
               </Link>
             </li>
