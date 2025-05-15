@@ -807,6 +807,10 @@ body {
 
 @media (max-width: 540px) {
 
+    .carousel-wrapper {
+        justify-content: center;
+    }
+
     .carousel-content {
         gap: 16px;
         margin-left: 0px;
