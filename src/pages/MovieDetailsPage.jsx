@@ -30,6 +30,10 @@ const MovieDetailsPage = () => {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     fetchMovieDetails(id);
   }, [id, fetchMovieDetails]);
 
